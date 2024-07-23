@@ -1,0 +1,34 @@
+name: 'Print Workflow Dispatch Inputs and Env Vars'
+description: 'A GitHub Action that prints all workflow_dispatch input values and optionally environment variables to the log'
+inputs:
+  print_env_vars:
+    description: 'Whether to print environment variables'
+    required: false
+    default: 'false'
+branding:
+  icon: 'printer'
+  color: 'blue'
+runs:
+  using: "composite"
+  steps:
+    - name: Print inputs & env vars
+      shell: bash
+      env:
+        PRINT_ENV_VARS: ${{ inputs.print_env_vars }}
+      run: |
+        echo "Printing all workflow_dispatch inputs:"
+        if [ -n "$GITHUB_EVENT_PATH" ] && [ -f "$GITHUB_EVENT_PATH" ]; then
+          inputs=$(jq -r '.inputs // empty' "$GITHUB_EVENT_PATH")
+          if [ -n "$inputs" ] && [ "$inputs" != "null" ]; then
+            echo "$inputs" | jq -r 'to_entries[] | "\(.key): \(.value)"'
+          else
+            echo "No workflow_dispatch inputs found in the event payload."
+          fi
+        else
+          echo "GITHUB_EVENT_PATH is not set or the file does not exist. This action may not be running in a workflow_dispatch context."
+        fi
+
+        if [ "$PRINT_ENV_VARS" = "true" ]; then
+          echo -e "\nPrinting environment variables:"
+          env | sort
+        fi

@@ -1,0 +1,52 @@
+name: Test Action
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      test_name:
+        description: 'Test name input'
+        required: true
+        type: string
+      test_number:
+        description: 'Test number input'
+        required: false
+        type: number
+
+jobs:
+  test-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run action (inputs only)
+        uses: ./
+      - name: Check output (inputs only)
+        run: |
+          output=$(cat $GITHUB_STEP_SUMMARY)
+          if [[ $output == *"test_name"* && $output == *"test_number"* ]]; then
+            echo "Test passed: Inputs were printed correctly"
+          else
+            echo "Test failed: Inputs were not printed as expected"
+            exit 1
+          fi
+
+  test-inputs-and-env:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run action (inputs and env vars)
+        uses: ./
+        with:
+          print_env_vars: 'true'
+      - name: Check output (inputs and env vars)
+        run: |
+          output=$(cat $GITHUB_STEP_SUMMARY)
+          if [[ $output == *"test_name"* && $output == *"test_number"* && $output == *"Printing environment variables:"* ]]; then
+            echo "Test passed: Inputs and env vars were printed correctly"
+          else
+            echo "Test failed: Inputs or env vars were not printed as expected"
+            exit 1
+          fi
