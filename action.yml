@@ -8,6 +8,7 @@ inputs:
 outputs:
   output:
     description: 'The output of the action'
+    value: ${{ steps.set-output.outputs.action_output }}
 branding:
   icon: 'printer'
   color: 'blue'
@@ -15,11 +16,12 @@ runs:
   using: "composite"
   steps:
     - name: Print workflow_dispatch inputs and env vars
+      id: set-output
       shell: bash
       env:
         PRINT_ENV_VARS: ${{ inputs.print_env_vars }}
       run: |
-        {
+        output=$(
           echo "Checking for workflow_dispatch inputs:"
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             if [ -n "$GITHUB_EVENT_PATH" ] && [ -f "$GITHUB_EVENT_PATH" ]; then
@@ -40,4 +42,9 @@ runs:
             echo -e "\nPrinting environment variables:"
             env | sort
           fi
-        } | tee -a $GITHUB_OUTPUT
+        )
+        echo "$output"
+        output="${output//'%'/'%25'}"
+        output="${output//$'\n'/'%0A'}"
+        output="${output//$'\r'/'%0D'}"
+        echo "action_output=$output" >> $GITHUB_OUTPUT
