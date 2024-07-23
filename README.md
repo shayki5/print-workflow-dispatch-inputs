@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print Workflow Dispatch Inputs and Env Vars
-        uses: shayki5/print-workflow-dispatch-inputs@v1.0.2
+        uses: shayki5/print-workflow-dispatch-inputs@v1
         with:
           print_env_vars: 'true' # Set 'true' to print environment variables as well (default: false)
 ```
