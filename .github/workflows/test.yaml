@@ -23,13 +23,17 @@ jobs:
       - uses: actions/checkout@v3
       - name: Run action (inputs only)
         uses: ./
+        id: print_inputs
       - name: Check output (inputs only)
         run: |
-          output=$(cat $GITHUB_STEP_SUMMARY)
-          if [[ $output == *"test_name"* && $output == *"test_number"* ]]; then
+          echo "Action output:"
+          echo "${{ steps.print_inputs.outputs.output }}"
+          
+          if [[ "${{ steps.print_inputs.outputs.output }}" == *"test_name"* && "${{ steps.print_inputs.outputs.output }}" == *"test_number"* ]]; then
             echo "Test passed: Inputs were printed correctly"
           else
             echo "Test failed: Inputs were not printed as expected"
+            echo "Expected to find 'test_name' and 'test_number' in the output"
             exit 1
           fi
 
@@ -39,14 +43,20 @@ jobs:
       - uses: actions/checkout@v3
       - name: Run action (inputs and env vars)
         uses: ./
+        id: print_inputs_and_env
         with:
           print_env_vars: 'true'
       - name: Check output (inputs and env vars)
         run: |
-          output=$(cat $GITHUB_STEP_SUMMARY)
-          if [[ $output == *"test_name"* && $output == *"test_number"* && $output == *"Printing environment variables:"* ]]; then
+          echo "Action output:"
+          echo "${{ steps.print_inputs_and_env.outputs.output }}"
+          
+          if [[ "${{ steps.print_inputs_and_env.outputs.output }}" == *"test_name"* && 
+                "${{ steps.print_inputs_and_env.outputs.output }}" == *"test_number"* && 
+                "${{ steps.print_inputs_and_env.outputs.output }}" == *"Printing environment variables:"* ]]; then
             echo "Test passed: Inputs and env vars were printed correctly"
           else
             echo "Test failed: Inputs or env vars were not printed as expected"
+            echo "Expected to find 'test_name', 'test_number', and 'Printing environment variables:' in the output"
             exit 1
           fi
