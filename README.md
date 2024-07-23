@@ -36,7 +36,7 @@ jobs:
       - name: Print Workflow Dispatch Inputs and Env Vars
         uses: shayki5/print-workflow-dispatch-inputs@v1
         with:
-          print_env_vars: 'true'  # Set to 'true' to print environment variables
+          print_env_vars: 'true'  # Set to 'true' to print environment variables as well (default: false)
 ```
 
 When you manually trigger this workflow and provide values for the inputs, the action will print these input values to the log. If `print_env_vars` is set to 'true', it will also print all environment variables.
