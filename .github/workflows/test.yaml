@@ -30,7 +30,7 @@ jobs:
           echo "Action output:"
           echo "${{ steps.print_inputs.outputs.output }}"
           
-          if [[ "${{ steps.print_inputs.outputs.output }}" == *"No workflow_dispatch inputs found in the event payload."* ]]; then
+          if [[ "${{ steps.print_inputs.outputs.output }}" == *"This is not a workflow_dispatch event. No inputs expected."* ]]; then
             echo "Test passed: No inputs were found, as expected for push/pull_request events"
           else
             echo "Test failed: Unexpected output for push/pull_request events"
