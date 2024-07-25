@@ -36,7 +36,7 @@ runs:
                 if [ "$ADD_TO_SUMMARY" = "true" ]; then
                   echo -e "\n<details>\n<summary>Inputs</summary>\n\n\`\`\`" >> $GITHUB_STEP_SUMMARY
                   echo "$inputs" | jq -r 'to_entries[] | "\(.key): \(.value)"' >> $GITHUB_STEP_SUMMARY
-                  echo -e "\n\`\`\`\n</details>" >> $GITHUB_STEP_SUMMARY
+                  echo -e "\`\`\`\n</details>" >> $GITHUB_STEP_SUMMARY
                 fi
               else
                 echo "No workflow_dispatch inputs found in the event payload."
