@@ -45,6 +45,8 @@ jobs:
       - name: Run action (inputs expected)
         uses: ./
         id: print_inputs
+        with:
+          add_to_summary: true
       - name: Check output (inputs expected)
         run: |
           echo "Action output:"
@@ -56,6 +58,7 @@ jobs:
             echo "Test failed: Inputs were not printed as expected for workflow_dispatch event"
             exit 1
           fi
+    
 
   test-env-vars:
     runs-on: ubuntu-latest
