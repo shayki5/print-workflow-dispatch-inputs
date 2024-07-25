@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print Workflow Dispatch Inputs and Env Vars
-        uses: your-username/print-workflow-dispatch-inputs@v1
+        uses: shayki5/print-workflow-dispatch-inputs@v1
         with:
           print_env_vars: 'true'  # Set to 'true' to print environment variables
           add_to_summary: 'true'  # Set to 'true' to add inputs to GitHub Summary
@@ -47,11 +47,6 @@ jobs:
 | `print_env_vars` | Whether to print environment variables | No | 'false' |
 | `add_to_summary` | Whether to add inputs to GitHub Summary | No | 'false' |
 
-## Outputs
-
-| Output | Description |
-|--------|-------------|
-| `output` | The full output of the action |
 
 ## GitHub Summary
 
@@ -63,7 +58,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contributing
 
-Contributions, issues, and feature requests are welcome! Feel free to check [issues page](https://github.com/your-username/print-workflow-dispatch-inputs/issues).
+Contributions, issues, and feature requests are welcome! Feel free to check [issues page](https://github.com/shayki5/print-workflow-dispatch-inputs/issues).
 
 ## Support
 
