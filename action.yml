@@ -5,6 +5,10 @@ inputs:
     description: 'Whether to print environment variables'
     required: false
     default: 'false'
+  add_to_summary:
+    description: 'Whether to add inputs to GitHub Summary'
+    required: false
+    default: 'false'
 outputs:
   output:
     description: 'The output of the action'
@@ -20,6 +24,7 @@ runs:
       shell: bash
       env:
         PRINT_ENV_VARS: ${{ inputs.print_env_vars }}
+        ADD_TO_SUMMARY: ${{ inputs.add_to_summary }}
       run: |
         output=$(
           echo "Checking for workflow_dispatch inputs:"
@@ -28,6 +33,11 @@ runs:
               inputs=$(jq -r '.inputs // empty' "$GITHUB_EVENT_PATH")
               if [ -n "$inputs" ] && [ "$inputs" != "null" ]; then
                 echo "$inputs" | jq -r 'to_entries[] | "\(.key): \(.value)"'
+                if [ "$ADD_TO_SUMMARY" = "true" ]; then
+                  echo -e "\n<details>\n<summary>Workflow Dispatch Inputs</summary>\n\n\`\`\`" >> $GITHUB_STEP_SUMMARY
+                  echo "$inputs" | jq -r 'to_entries[] | "\(.key): \(.value)"' >> $GITHUB_STEP_SUMMARY
+                  echo -e "\n\`\`\`\n</details>" >> $GITHUB_STEP_SUMMARY
+                fi
               else
                 echo "No workflow_dispatch inputs found in the event payload."
               fi
