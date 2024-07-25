@@ -34,7 +34,7 @@ runs:
               if [ -n "$inputs" ] && [ "$inputs" != "null" ]; then
                 echo "$inputs" | jq -r 'to_entries[] | "\(.key): \(.value)"'
                 if [ "$ADD_TO_SUMMARY" = "true" ]; then
-                  echo -e "\n<details>\n<summary>Workflow Dispatch Inputs</summary>\n\n\`\`\`" >> $GITHUB_STEP_SUMMARY
+                  echo -e "\n<details>\n<summary>Inputs</summary>\n\n\`\`\`" >> $GITHUB_STEP_SUMMARY
                   echo "$inputs" | jq -r 'to_entries[] | "\(.key): \(.value)"' >> $GITHUB_STEP_SUMMARY
                   echo -e "\n\`\`\`\n</details>" >> $GITHUB_STEP_SUMMARY
                 fi
