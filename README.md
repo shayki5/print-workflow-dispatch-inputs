@@ -1,13 +1,13 @@
 # Print Workflow Dispatch Inputs and Env Vars
 
-This GitHub Action prints all input values from a `workflow_dispatch` event to the log. Optionally, it can also print all environment variables. It's a simple and effective tool for debugging or verifying input values and environment settings in your manually triggered workflows.
+This GitHub Action prints all input values from a `workflow_dispatch` event to the log. Optionally, it can also print environment variables and add inputs to the GitHub Summary in a collapsible format.
 
 ## Features
 
 - Prints all `workflow_dispatch` inputs to the log
 - Optionally prints all environment variables
+- Optionally adds inputs to GitHub Summary in a collapsible format
 - Minimal configuration required
-- Doesn't require a GitHub token
 - Lightweight and fast
 
 ## Usage
@@ -34,26 +34,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print Workflow Dispatch Inputs and Env Vars
-        uses: shayki5/print-workflow-dispatch-inputs@v1
+        uses: your-username/print-workflow-dispatch-inputs@v1
         with:
-          print_env_vars: 'true' # Set 'true' to print environment variables as well (default: false)
+          print_env_vars: 'true'  # Set to 'true' to print environment variables
+          add_to_summary: 'true'  # Set to 'true' to add inputs to GitHub Summary
 ```
-
-When you manually trigger this workflow and provide values for the inputs, the action will print these input values to the log. If `print_env_vars` is set to 'true', it will also print all environment variables.
 
 ## Inputs
 
 | Input | Description | Required | Default |
 |-------|-------------|----------|---------|
 | `print_env_vars` | Whether to print environment variables | No | 'false' |
+| `add_to_summary` | Whether to add inputs to GitHub Summary | No | 'false' |
 
-## How it Works
+## Outputs
 
-This action reads the event payload from the `GITHUB_EVENT_PATH` environment variable, which is automatically set by GitHub Actions. It then uses `jq` to extract and print the input values. If `print_env_vars` is set to 'true', it also prints all environment variables using the `env` command.
+| Output | Description |
+|--------|-------------|
+| `output` | The full output of the action |
 
-## Requirements
+## GitHub Summary
 
-This action is designed to work with `workflow_dispatch` events. It will not print inputs for other event types, but can still print environment variables if enabled.
+When `add_to_summary` is set to 'true', the action will add the workflow dispatch inputs to the GitHub Summary in a collapsible format. This allows you to easily view the inputs without cluttering the summary.
 
 ## License
 
@@ -61,7 +63,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contributing
 
-Contributions, issues, and feature requests are welcome! Feel free to check [issues page](https://github.com/shayki5/print-workflow-dispatch-inputs/issues).
+Contributions, issues, and feature requests are welcome! Feel free to check [issues page](https://github.com/your-username/print-workflow-dispatch-inputs/issues).
 
 ## Support
 
