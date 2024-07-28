@@ -1,4 +1,4 @@
-# Print Workflow Dispatch Inputs and Env Vars
+# Print Workflow Dispatch Inputs
 
 This GitHub Action prints all input values from a `workflow_dispatch` event to the log. Optionally, it can also print environment variables and add inputs to the GitHub Summary in a collapsible format.
 
