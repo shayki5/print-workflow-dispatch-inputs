@@ -1,5 +1,5 @@
 name: 'Print Workflow Dispatch Inputs'
-description: 'A GitHub Action that prints all workflow_dispatch input values and optionally environment variables to the log. optionally can add inputs to the GitHub Summary in a collapsible format.'
+description: 'Print all workflow_dispatch input values and environment variables to the log. can add inputs to the GitHub Summary'
 inputs:
   print_env_vars:
     description: 'Whether to print environment variables'
